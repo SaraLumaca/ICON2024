@@ -6,10 +6,10 @@ import neural_network_model
 
 def main():
     # Leggi i dati dai file CSV
-    df1 = data_handling.read_data(r'C:\Users\letha\Desktop\Salute mentale nel mondo - Copia\dbOriginale copy\DisturbiMentali-DalysNazioniDelMondo.csv')
-    df2 = data_handling.read_data(r'C:\Users\letha\Desktop\Salute mentale nel mondo - Copia\dbOriginale copy\DisturbiMentali2008-areeGeografiche.csv')
-    df3 = data_handling.read_data(r'C:\Users\letha\Desktop\Salute mentale nel mondo\dbOriginale\6- depressive-symptoms-across-us-population.csv')
-    df4 = data_handling.read_data(r'C:\Users\letha\Desktop\Salute mentale nel mondo\dbOriginale\7- number-of-countries-with-primary-data-on-prevalence-of-mental-illnesses-in-the-global-burden-of-disease-study.csv')
+    df1 = data_handling.read_data(r'dbUsati\DisturbiMentali-DalysNazioniDelMondo.csv')
+    df2 = data_handling.read_data(r'dbUsati\DisturbiMentali2008-areeGeografiche.csv')
+    df3 = data_handling.read_data(r'dbUsati\6- depressive-symptoms-across-us-population.csv')
+    df4 = data_handling.read_data(r'dbUsati\7- number-of-countries-with-primary-data-on-prevalence-of-mental-illnesses-in-the-global-burden-of-disease-study.csv')
     
     # Effettua la descrizione dei dati
     print("Descrizione tabella1: Disturbi Mentali-DALYs in tutte le nazioni del mondo (Anni:1990-2019)")
