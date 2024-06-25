@@ -76,7 +76,7 @@ cluster = {
 # Aggiunge una colonna per la descrizione
 clustering_df['Gruppo_di_intervento (0: "sviluppo economico: medio livelli alti di depressione e ansia", 1: "reddito alto: prevalenza disturbi depressivi", 2: "Reddito basso: prevalenza di disturbi di ansia, bipolare e schizofrenico")'] = clustering_df['Cluster_KMeans'].map(cluster)
 
-# Rinomina la colonna 'Country Name' a 'Entity' per corrispondere con dataset_arricchito_completo
+# Rinomina la colonna 'Country Name' a 'Entity' per corrispondere l'altro dataset
 clustering_df.rename(columns={'Country Name': 'Entity'}, inplace=True)
 
 #elimina i duplicati
