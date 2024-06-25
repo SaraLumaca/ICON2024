@@ -93,6 +93,7 @@ if all(os.path.exists(path) for path in file_paths.values()):
     df_merge.to_csv(output_file_path_merge, index=False)
     print(f"Il file è stato salvato con successo in: {output_file_path_merge}")
 
+    #4,5,7
     # Rimuovi entità da df4 e df5
     entities_to_remove_4 = ['World']
     entities_to_remove_5 = ['Beijing/Shanghai, China', 'High-income countries', 'Lower-middle-income countries', 'Medellin, Colombia', 'Murcia, Spain', 'Sao Paulo, Brazil', 'Upper-middle-income countries']
@@ -120,6 +121,8 @@ if all(os.path.exists(path) for path in file_paths.values()):
         #'Country Name': 'Entity',
         'Country Code': 'Code'
     }, inplace=True)
+
+    df_sec.drop(columns=['2022 [YR2022]','2023 [YR2023]'], inplace=True)
 
     output_file_path_dfe = os.path.join(current_dir, '..', 'DbDefinitivi', 'SocialEconomicData.csv')
     df_sec.to_csv(output_file_path_dfe, index=False)
