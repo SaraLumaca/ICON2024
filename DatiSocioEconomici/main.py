@@ -9,7 +9,7 @@ import os
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
-data_df1_path = os.path.join(current_dir, 'SocialEconomicData.csv')
+data_df1_path = os.path.join(current_dir,'..', 'Europa', 'DbDefinitivi', 'SocialEconomicData.csv')
 data_df2_path = os.path.join(current_dir, '..', 'Europa', 'DbDefinitivi', 'DisturbiMentali-DalysNazioniDelMondo.csv')
 
 # Carica i dataset
@@ -21,24 +21,23 @@ print("Colonne in SED_df1:", SED_df1.columns)
 print("Colonne in Dalys_df2:", Dalys_df2.columns)
 
 # Unisci i dataset
-Dalys_df2.rename(columns={"Code": "Country Code"}, inplace=True)
-merged_df = pd.merge(SED_df1, Dalys_df2, on="Country Code", how="inner")
+#Dalys_df2.rename(columns={"Code": "Country Code"}, inplace=True)
+merged_df = pd.merge(SED_df1, Dalys_df2, on="Code", how="inner")
 
 print("Colonne in merged_df:", merged_df.columns)
 
 # Pulisci i dati
-cleaned_df = merged_df.drop_duplicates()
-
+clustering_df = merged_df.drop_duplicates()
 
 # Rinomina le colonne per chiarezza
-clustering_df = cleaned_df.copy()
-clustering_df.rename(columns={
-    'Schizophrenia disorders': 'Schizophrenia',
-    'Depressive disorders': 'Depressive',
-    'Anxiety disorders': 'Anxiety',
-    'Bipolar disorders': 'Bipolar',
-    'Eating disorders': 'Eating',
-}, inplace=True)
+#clustering_df = cleaned_df.copy()
+#clustering_df.rename(columns={
+  #  'Schizophrenia disorders': 'Schizophrenia',
+ #   'Depressive disorders': 'Depressive',
+  #  'Anxiety disorders': 'Anxiety',
+   # 'Bipolar disorders': 'Bipolar',
+    #'Eating disorders': 'Eating',
+#}, in place=True)
 
 # Stampa le colonne di clustering_df per verificare
 print("Colonne in clustering_df dopo la pulizia:", clustering_df.columns)
@@ -73,11 +72,9 @@ cluster = {
     2: "2"
 }
 
-# Aggiunge una colonna per la descrizione
+# Aggiunge una colonna per il gruppo di intervento
 clustering_df['Gruppo_di_intervento (0: "sviluppo economico: medio livelli alti di depressione e ansia", 1: "reddito alto: prevalenza disturbi depressivi", 2: "Reddito basso: prevalenza di disturbi di ansia, bipolare e schizofrenico")'] = clustering_df['Cluster_KMeans'].map(cluster)
 
-# Rinomina la colonna 'Country Name' a 'Entity' per corrispondere l'altro dataset
-clustering_df.rename(columns={'Country Name': 'Entity'}, inplace=True)
 
 #elimina i duplicati
 clustering_df = clustering_df.loc[:, ~clustering_df.columns.duplicated()]
