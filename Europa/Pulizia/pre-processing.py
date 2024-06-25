@@ -115,14 +115,10 @@ if all(os.path.exists(path) for path in file_paths.values()):
     df7.to_csv(output_file_path_7, index=False)
     print(f"Il file è stato salvato con successo in: {output_file_path_7}")
 
-    # Rename columns in df_sec and save to CSV
+    #Social Economic Data
+
     df_sec.rename(columns={
-        'Schizophrenia disorders': 'Schizophrenia',
-        'Depressive disorders': 'Depressive',
-        'Anxiety disorders': 'Anxiety',
-        'Bipolar disorders': 'Bipolar',
-        'Eating disorders': 'Eating',
-        'Country Name': 'Entity',  
+        #'Country Name': 'Entity',
         'Country Code': 'Code'
     }, inplace=True)
 

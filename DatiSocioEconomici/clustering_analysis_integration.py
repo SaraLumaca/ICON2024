@@ -1,10 +1,11 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-#from sklearn.preprocessing import StandardScaler
+# from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import AgglomerativeClustering, KMeans
 from sklearn.metrics import silhouette_score
 from kneed import KneeLocator
+
 
 class ClusteringAnalysis:
     def __init__(self):
@@ -73,11 +74,15 @@ class ClusteringAnalysis:
 
     def plot_clusters(self, df, features, labels, title_prefix):
         fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(15, 10))
-        
-        sns.scatterplot(ax=axes[0, 0], data=df, x='Schizophrenia', y='Depressive', hue='Average_GDP', palette='viridis', size='Average_GDP').set_title('Schizophrenia vs Depressive')
-        sns.scatterplot(ax=axes[0, 1], data=df, x='Depressive', y='Anxiety', hue='Average_GDP', palette='viridis', size='Average_GDP').set_title('Depressive vs Anxiety')
-        sns.scatterplot(ax=axes[1, 0], data=df, x='Anxiety', y='Bipolar', hue='Average_GDP', palette='viridis', size='Average_GDP').set_title('Anxiety vs Bipolar')
-        sns.scatterplot(ax=axes[1, 1], data=df, x='Bipolar', y='Eating', hue='Average_GDP', palette='viridis', size='Average_GDP').set_title('Bipolar vs Eating')
+
+        sns.scatterplot(ax=axes[0, 0], data=df, x='Schizophrenia', y='Depressive', hue='Average_GDP', palette='viridis',
+                        size='Average_GDP').set_title('Schizophrenia vs Depressive')
+        sns.scatterplot(ax=axes[0, 1], data=df, x='Depressive', y='Anxiety', hue='Average_GDP', palette='viridis',
+                        size='Average_GDP').set_title('Depressive vs Anxiety')
+        sns.scatterplot(ax=axes[1, 0], data=df, x='Anxiety', y='Bipolar', hue='Average_GDP', palette='viridis',
+                        size='Average_GDP').set_title('Anxiety vs Bipolar')
+        sns.scatterplot(ax=axes[1, 1], data=df, x='Bipolar', y='Eating', hue='Average_GDP', palette='viridis',
+                        size='Average_GDP').set_title('Bipolar vs Eating')
 
         plt.tight_layout()
         plt.show()
@@ -86,11 +91,13 @@ class ClusteringAnalysis:
         numeric_columns = ['Schizophrenia', 'Depressive', 'Anxiety', 'Bipolar', 'Eating', 'Average_GDP']
         cluster_means = df.groupby(cluster_column)[numeric_columns].mean()
 
-        cluster_means_reset = cluster_means.reset_index().melt(id_vars=cluster_column, var_name='Disorder', value_name='Mean Value')
+        cluster_means_reset = cluster_means.reset_index().melt(id_vars=cluster_column, var_name='Disorder',
+                                                               value_name='Mean Value')
 
         fig, ax1 = plt.subplots(figsize=(12, 8))
 
-        sns.barplot(x='Disorder', y='Mean Value', hue=cluster_column, data=cluster_means_reset, palette='viridis', ax=ax1)
+        sns.barplot(x='Disorder', y='Mean Value', hue=cluster_column, data=cluster_means_reset, palette='viridis',
+                    ax=ax1)
         ax1.set_title(f'Valori Medi dei Disturbi Mentali per {cluster_column}')
         ax1.set_xlabel('Disturbo Mentale')
         ax1.set_ylabel('Valore Medio')
@@ -99,7 +106,8 @@ class ClusteringAnalysis:
 
         # Create a secondary y-axis for Average_GDP
         ax2 = ax1.twinx()
-        sns.lineplot(data=cluster_means_reset[cluster_means_reset['Disorder'] == 'Average_GDP'], x='Disorder', y='Mean Value', hue=cluster_column, markers=True, dashes=False, ax=ax2, legend=False)
+        sns.lineplot(data=cluster_means_reset[cluster_means_reset['Disorder'] == 'Average_GDP'], x='Disorder',
+                     y='Mean Value', hue=cluster_column, markers=True, dashes=False, ax=ax2, legend=False)
         ax2.set_ylabel('Average GDP')
 
         plt.show()
@@ -107,7 +115,7 @@ class ClusteringAnalysis:
 
     def correlation_analysis(self, df):
         correlation_matrix = df[['Schizophrenia', 'Depressive', 'Anxiety', 'Bipolar', 'Eating', 'Average_GDP']].corr()
-        
+
         plt.figure(figsize=(10, 8))
         sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f')
         plt.title('Matrice di Correlazione tra Disturbi Mentali e GDP')

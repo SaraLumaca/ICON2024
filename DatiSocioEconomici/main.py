@@ -5,8 +5,6 @@ import matplotlib.pyplot as plt
 from clustering_analysis_integration import ClusteringAnalysis
 import os
 
-# Percorsi relativi utilizzando os.path.join
-
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
 data_df1_path = os.path.join(current_dir,'..', 'Europa', 'DbDefinitivi', 'SocialEconomicData.csv')
@@ -26,6 +24,7 @@ merged_df = pd.merge(SED_df1, Dalys_df2, on="Code", how="inner")
 
 print("Colonne in merged_df:", merged_df.columns)
 
+
 # Pulisci i dati
 clustering_df = merged_df.drop_duplicates()
 
@@ -42,6 +41,15 @@ clustering_df = merged_df.drop_duplicates()
 # Stampa le colonne di clustering_df per verificare
 print("Colonne in clustering_df dopo la pulizia:", clustering_df.columns)
 
+clustering_df.rename(columns={
+    'Schizophrenia disorders': 'Schizophrenia',
+    'Depressive disorders': 'Depressive',
+    'Anxiety disorders': 'Anxiety',
+    'Bipolar disorders': 'Bipolar',
+    'Eating disorders': 'Eating',
+}, inplace=True)
+
+
 # Scala i dati prima del clustering
 scaler = StandardScaler()
 clustering_df[['Schizophrenia', 'Depressive', 'Anxiety', 'Bipolar', 'Eating']] = scaler.fit_transform(
@@ -55,6 +63,8 @@ for col in subset_gdp_columns:
     clustering_df[col] = pd.to_numeric(clustering_df[col].replace('..', pd.NA), errors='coerce')
 
 clustering_df['Average_GDP'] = clustering_df[subset_gdp_columns].mean(axis=1, skipna=True)
+
+print("Colonne prima del kmeans:", clustering_df.columns)
 
 # Istanzia la classe di analisi del clustering
 clustering_analysis = ClusteringAnalysis()
@@ -72,9 +82,10 @@ cluster = {
     2: "2"
 }
 
+clustering_df.rename(columns={'Country Name': 'Entity'}, inplace=True)
+
 # Aggiunge una colonna per il gruppo di intervento
 clustering_df['Gruppo_di_intervento (0: "sviluppo economico: medio livelli alti di depressione e ansia", 1: "reddito alto: prevalenza disturbi depressivi", 2: "Reddito basso: prevalenza di disturbi di ansia, bipolare e schizofrenico")'] = clustering_df['Cluster_KMeans'].map(cluster)
-
 
 #elimina i duplicati
 clustering_df = clustering_df.loc[:, ~clustering_df.columns.duplicated()]
