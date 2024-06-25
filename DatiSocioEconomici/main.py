@@ -94,7 +94,7 @@ clustering_df = clustering_df.loc[:, ~clustering_df.columns.duplicated()]
 dataset_finale = pd.merge(Dalys_df2, clustering_df[['Entity', 'Year', 'Cluster_KMeans', 'Gruppo_di_intervento (0: "sviluppo economico: medio livelli alti di depressione e ansia", 1: "reddito alto: prevalenza disturbi depressivi", 2: "Reddito basso: prevalenza di disturbi di ansia, bipolare e schizofrenico")']],
                           on=['Entity', 'Year'], how='left')
 
-dataset_finale_path = os.path.join(current_dir, '..', 'Europa', 'DbDefinitivi', 'DisturbiMentali-DalysNazioniDelMondo-GruppoDiIntervento.csv')
+dataset_finale_path = os.path.join(current_dir, '..', 'Europa', 'Risultati', 'DisturbiMentali-DalysNazioniDelMondo-GruppoDiIntervento.csv')
 dataset_finale.to_csv(dataset_finale_path, index=False)
 
 print("Dataset aggiornato e salvato con successo.")

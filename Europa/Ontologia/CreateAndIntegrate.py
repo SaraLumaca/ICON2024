@@ -1,9 +1,14 @@
+import os
+
 import pandas as pd
 from rdflib import Graph, Literal, RDF, URIRef, Namespace
 from rdflib.namespace import XSD, OWL
 
 # Load the dataset
-file_path = 'Europa/Risultati/DisturbiMentali-DalysNazioniDelMondo-GruppoDiIntervento.csv'
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+file_path = os.path.join(current_dir,'..', 'Risultati', 'DisturbiMentali-DalysNazioniDelMondo-GruppoDiIntervento.csv')
+
 df = pd.read_csv(file_path)
 
 # Define namespaces
@@ -27,7 +32,8 @@ g.bind("futura", FUTURA)
 g.bind("obo", OBO)
 
 # Import the existing ontology
-existing_ontology_path = 'Europa/Ontologia/HumanDiseaseOntology.owl'
+
+existing_ontology_path = os.path.join(current_dir, 'HumanDiseaseOntology.owl')
 g.parse(existing_ontology_path)
 
 # Function to create RDF triples
@@ -68,5 +74,5 @@ def create_rdf_triples(row):
 df.apply(create_rdf_triples, axis=1)
 
 # Serialize the graph to an OWL file
-output_path = r'Europa/Risultati/IntegratedOntology.owl'
+output_path = os.path.join(current_dir,'..', 'Risultati', 'IntegratedOntology.owl')
 g.serialize(destination=output_path, format='xml')
