@@ -260,15 +260,6 @@ def analyze_and_predict(df1):
     cols = cols[-1:] + cols[:-1]
     predictions_rf_df = predictions_rf_df[cols]
 
-    # Salva su CSV
-    #base_dir = os.path.dirname(os.path.abspath(__file__))
-   # output_file_path = os.path.join(base_dir, '..', 'Risultato',
-                            # 'Previsioni_DALYs_Italia.csv')
-
-    #predictions_rf_df.to_csv(output_file_path, index=False)
-
-    #print(f"Previsioni salvate nel file: {output_file_path}")
-
     return results_df, predictions_rf_df
 
 

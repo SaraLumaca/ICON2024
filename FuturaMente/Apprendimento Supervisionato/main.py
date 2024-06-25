@@ -1,7 +1,6 @@
 import os
 import pandas as pd
 import data_visualization as dv
-import prevision as prev
 import optimize_rf as opt
 
 # Determina il percorso del file corrente
@@ -19,14 +18,8 @@ df2 = pd.DataFrame(Data2)
 df3 = pd.DataFrame(Data3)
 df4 = pd.DataFrame(Data4)
 
-# Caricare il dataset
-file_path = os.path.join(base_dir, '..', 'DbDefinitivi', 'DisturbiMentali-DalysNazioniDelMondo.csv')
-if not os.path.exists(file_path):
-    raise FileNotFoundError(f"Il file {file_path} non esiste.")
-data = pd.read_csv(file_path)
-
 # Filtrare i dati per l'Italia
-data_italy = data[data['Entity'] == 'Italy']
+data_italy = Data1[Data1['Entity'] == 'Italy']
 
 # Elenco delle patologie e dei rispettivi DALYs
 dalys_columns = [
@@ -36,7 +29,7 @@ dalys_columns = [
 ]
 
 # Elenco di tutte le metriche presenti nel dataset
-all_columns = data.columns.tolist()
+all_columns = Data1.columns.tolist()
 # Rimuovere le colonne che non sono metriche (Entity, Code, Year)
 feature_columns = [col for col in all_columns if col not in ['Entity', 'Code', 'Year'] + dalys_columns]
 
@@ -100,9 +93,7 @@ def main_menu():
                 choice = input("Inserisci la tua scelta: ")
 
                 if choice == "1":
-                        #confronto regressione lineare,polinomiale  e random forest
-                        #prev.analyze_and_predict(df1)
-                        opt.predict_dalys()
+                        opt.predict_dalys(feature_columns, dalys_columns, data_italy)
                 elif choice == "0":
                     break
                 else:
