@@ -1,5 +1,6 @@
 #confronto tra reti neurali e random forest
 
+import os
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
@@ -8,7 +9,9 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, m
 import matplotlib.pyplot as plt
 
 # Carica il dataset
-file_path = r'ICON-20240618-0005\Europa\DbDefinitivi\DisturbiMentali-DalysNazioniDelMondo.csv'
+current_dir = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(current_dir,'..', 'DbDefinitivi', 'DisturbiMentali-DalysNazioniDelMondo.csv')
+
 dataset = pd.read_csv(file_path)
 
 # Filtra i dati per l'Italia

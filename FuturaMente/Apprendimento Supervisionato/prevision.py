@@ -1,4 +1,4 @@
-#Confronta modelli di regressione linare, regressioni polinomiale e random forest
+import os
 
 import pandas as pd
 import numpy as np
@@ -8,6 +8,8 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, make_scorer
 from sklearn.model_selection import cross_val_score, KFold, RandomizedSearchCV
 import matplotlib.pyplot as plt
+
+# Confronta modelli di regressione linare, regressioni polinomiale e random forest
 
 def analyze_and_predict(df1):
     # Filtra i dati per l'Italia
@@ -158,13 +160,10 @@ def analyze_and_predict(df1):
         plt.legend()
         plt.show()
 
-    # Create summary tables for the predictions of each model for each disorder
     summary_tables = {}
 
-    # List of future years
     future_years_list = np.arange(2021, 2031).reshape(-1, 1)
 
-    # Create summary tables
     for disorder in disorders:
         summary_table = pd.DataFrame({
             'Anno': future_years_list.flatten(),
@@ -174,13 +173,13 @@ def analyze_and_predict(df1):
         })
         summary_tables[disorder] = summary_table
 
-    # Display summary tables
+    # Stampa
     for disorder, table in summary_tables.items():
         print(f"Previsioni per {disorder}")
         print(table)
         print("\n")
 
-    # Assicurati che tutte le chiavi siano presenti nel dizionario future_predictions
+    # Si assicura che tutte le chiavi siano presenti nel dizionario future_predictions
     expected_keys = [f'{model} {disorder}' for model in ['Regressione Lineare', 'Regressione Polinomiale (Grado 2)', 'Random Forest'] for disorder in disorders]
     missing_keys = [key for key in expected_keys if key not in future_predictions]
     if missing_keys:
@@ -222,7 +221,7 @@ def analyze_and_predict(df1):
         ensemble_results['RMSE Medio Ensemble'].append(rmse_ensemble.mean())
         ensemble_results['Deviazione Std RMSE Ensemble'].append(rmse_ensemble.std())
 
-    # Converti i risultati delle previsioni combinate in DataFrame
+    # Converte i risultati delle previsioni combinate in DataFrame
     ensemble_results_df = pd.DataFrame(ensemble_results)
 
     # Visualizza i risultati delle previsioni combinate
@@ -253,7 +252,7 @@ def analyze_and_predict(df1):
     for disorder in disorders:
         predictions_rf_df[f'Random Forest {disorder}'] = predictions_rf[f'Random Forest {disorder}']
 
-    # Aggiungi gli anni futuri al DataFrame
+    # Aggiunge gli anni futuri al DataFrame
     predictions_rf_df['Year'] = future_years.flatten()
 
     # Riordina le colonne per posizionare Year all'inizio
@@ -262,7 +261,10 @@ def analyze_and_predict(df1):
     predictions_rf_df = predictions_rf_df[cols]
 
     # Salva su CSV
-    #output_file_path = 'Previsioni_DALYs_Italia.csv'
+    #base_dir = os.path.dirname(os.path.abspath(__file__))
+   # output_file_path = os.path.join(base_dir, '..', 'Risultato',
+                            # 'Previsioni_DALYs_Italia.csv')
+
     #predictions_rf_df.to_csv(output_file_path, index=False)
 
     #print(f"Previsioni salvate nel file: {output_file_path}")

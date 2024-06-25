@@ -1,11 +1,9 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-# from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import AgglomerativeClustering, KMeans
 from sklearn.metrics import silhouette_score
 from kneed import KneeLocator
-
 
 class ClusteringAnalysis:
     def __init__(self):

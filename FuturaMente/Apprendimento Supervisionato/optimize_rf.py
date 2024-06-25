@@ -1,5 +1,3 @@
-#Migliora le prestazioni del random forest e ottieni le previsioni
-
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, cross_val_score, KFold
@@ -9,9 +7,11 @@ from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 import matplotlib.pyplot as plt
 import os
 
+#Migliora le prestazioni del random forest e ottiene le previsioni
+
 # Caricare il dataset
 base_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(base_dir, '..', 'DbDefinitivi', 'DisturbiMentali-DalysNazioniDelMondo-GruppoDiIntervento.csv')
+file_path = os.path.join(base_dir, '..', 'DbDefinitivi', 'DisturbiMentali-DalysNazioniDelMondo.csv')
 data = pd.read_csv(file_path)
 
 # Filtrare i dati per l'Italia
@@ -119,11 +119,11 @@ for target_daly in dalys_columns:
     plt.legend()
     plt.show()
 
-# Creare un dataframe per i risultati futuri
+# Crea un dataframe per i risultati futuri
 future_df = pd.DataFrame(future_predictions_dict, index=future_years)
 future_df.index.name = 'Year'
 
-# Salvare le previsioni ottenute in un file CSV
+# Salva le previsioni ottenute in un file CSV
 output_file_path = os.path.join(base_dir, '..', 'Risultati', 'PrevisioniDalysItalia.csv')
 future_df.to_csv(output_file_path)
 
