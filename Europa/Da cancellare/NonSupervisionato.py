@@ -11,7 +11,7 @@ import plotly.express as px
 
 # Caricamento del dataset
 def load_data():
-    df = pd.read_csv("DisturbiMentali-DalysNazioniDelMondo.csv")
+    df = pd.read_csv("DisturbiMentali-DalysNazioniDelMondo-GruppoDiIntervento.csv")
     df = df.rename(columns={'Schizophrenia disorders' : 'Schizophrenia', 
                             'Depressive disorders': 'Depressive',
                             'Anxiety disorders':'Anxiety',

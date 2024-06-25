@@ -6,7 +6,7 @@ from clustering_analysis import ClusteringAnalysis
 def load_data():
     base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory dello script corrente
     file_path = os.path.join(base_dir, '..', 'DbDefinitivi',
-                             'DisturbiMentali-DalysNazioniDelMondo.csv')  # Percorso relativo corretto
+                             'DisturbiMentali-DalysNazioniDelMondo-GruppoDiIntervento.csv')  # Percorso relativo corretto
     print(file_path)
 
     if not os.path.exists(file_path):

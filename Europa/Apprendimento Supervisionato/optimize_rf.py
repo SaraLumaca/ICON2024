@@ -11,7 +11,7 @@ import os
 
 # Caricare il dataset
 base_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(base_dir, '..', 'DbDefinitivi', 'DisturbiMentali-DalysNazioniDelMondo.csv')
+file_path = os.path.join(base_dir, '..', 'DbDefinitivi', 'DisturbiMentali-DalysNazioniDelMondo-GruppoDiIntervento.csv')
 data = pd.read_csv(file_path)
 
 # Filtrare i dati per l'Italia

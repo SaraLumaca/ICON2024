@@ -8,7 +8,7 @@ import optimize_rf as opt
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Lettura dei dati da file CSV
-Data1 = pd.read_csv(os.path.join(base_dir, '..', 'DbDefinitivi', 'DisturbiMentali-DalysNazioniDelMondo.csv'))
+Data1 = pd.read_csv(os.path.join(base_dir, '..', 'DbDefinitivi', 'DisturbiMentali-DalysNazioniDelMondo-GruppoDiIntervento.csv'))
 Data2 = pd.read_csv(os.path.join(base_dir, '..', 'DbDefinitivi', '4- adult-population-covered-in-primary-data-on-the-prevalence-of-mental-illnesses.csv'))
 Data3 = pd.read_csv(os.path.join(base_dir, '..', 'DbOriginali', '6- depressive-symptoms-across-us-population.csv'))
 Data4 = pd.read_csv(os.path.join(base_dir, '..', 'DbDefinitivi', '7- number-of-countries-with-primary-data-on-prevalence-of-mental-illnesses-in-the-global-burden-of-disease-study.csv'))
@@ -20,7 +20,7 @@ df3 = pd.DataFrame(Data3)
 df4 = pd.DataFrame(Data4)
 
 # Caricare il dataset
-file_path = os.path.join(base_dir, '..', 'DbDefinitivi', 'DisturbiMentali-DalysNazioniDelMondo.csv')
+file_path = os.path.join(base_dir, '..', 'DbDefinitivi', 'DisturbiMentali-DalysNazioniDelMondo-GruppoDiIntervento.csv')
 if not os.path.exists(file_path):
     raise FileNotFoundError(f"Il file {file_path} non esiste.")
 data = pd.read_csv(file_path)

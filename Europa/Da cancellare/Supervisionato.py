@@ -12,7 +12,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # Lettura dei dati da file CSV
-Data1 = pd.read_csv(r"DisturbiMentali-DalysNazioniDelMondo.csv")
+Data1 = pd.read_csv(r"DisturbiMentali-DalysNazioniDelMondo-GruppoDiIntervento.csv")
 Data2 = pd.read_csv(r'4- adult-population-covered-in-primary-data-on-the-prevalence-of-mental-illnesses.csv')
 Data3 = pd.read_csv(r'6- depressive-symptoms-across-us-population.csv')
 Data4 = pd.read_csv(r'7- number-of-countries-with-primary-data-on-prevalence-of-mental-illnesses-in-the-global-burden-of-disease-study.csv')
