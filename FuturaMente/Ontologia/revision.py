@@ -37,5 +37,4 @@ for s in g_generated.subjects(RDF.type, FUTURA.Country):
         else:
             print(f"  Proprietà: {p}, Valore: {o}")
 
-# Mappare correttamente le URI non standard (se necessario)
-# Questo richiede una revisione manuale e potrebbe essere specifico per il progetto
+
