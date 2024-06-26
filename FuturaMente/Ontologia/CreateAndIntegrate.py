@@ -1,21 +1,20 @@
 import os
-
 import pandas as pd
 from rdflib import Graph, Literal, RDF, URIRef, Namespace
 from rdflib.namespace import XSD, OWL
 
-# Load the dataset
+# Carica il dataset
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
-file_path = os.path.join(current_dir,'..', 'Risultati', 'DisturbiMentali-DalysNazioniDelMondo-GruppoDiIntervento.csv')
+file_path = os.path.join(current_dir, '..', 'Risultati', 'DisturbiMentali-DalysNazioniDelMondo-GruppoDiIntervento.csv')
 
 df = pd.read_csv(file_path)
 
-# Define namespaces
+# namespace
 FUTURA = Namespace("http://futuramente.org/ontologies/2023#")
 OBO = Namespace("http://purl.obolibrary.org/obo/")
 
-# Mapping of disorders to their URIs
+# Mappatura dei disturbi ai loro URI
 disorder_uris = {
     "Schizophrenia": OBO.DOID_5419,
     "Depressive": OBO.DOID_1596,
@@ -24,40 +23,41 @@ disorder_uris = {
     "Eating": OBO.DOID_8670
 }
 
-# Create a new graph for the integrated ontology
+# Crea un nuovo grafo per l'ontologia integrata
 g = Graph()
 
-# Bind namespaces
+# Associa i namespace
 g.bind("futura", FUTURA)
 g.bind("obo", OBO)
 
-# Import the existing ontology
-
+# Importa l'ontologia esistente
 existing_ontology_path = os.path.join(current_dir, 'HumanDiseaseOntology.owl')
 g.parse(existing_ontology_path)
 
-# Function to create RDF triples
+
+# Funzione per creare RDF
 def create_rdf_triples(row):
     country = URIRef(FUTURA + row['Entity'].replace(" ", "_"))
     year = Literal(row['Year'], datatype=XSD.gYear)
-    group = row['Gruppo_di_intervento (0: "sviluppo economico: medio livelli alti di depressione e ansia", 1: "reddito alto: prevalenza disturbi depressivi", 2: "Reddito basso: prevalenza di disturbi di ansia, bipolare e schizofrenico")']
-    
+    group = row[
+        'Gruppo_di_intervento (0: "sviluppo economico: medio livelli alti di depressione e ansia", 1: "reddito alto: prevalenza disturbi depressivi", 2: "Reddito basso: prevalenza di disturbi di ansia, bipolare e schizofrenico")']
+
     g.add((country, RDF.type, FUTURA.Country))
     g.add((country, FUTURA.hasYear, year))
-    
+
     for disorder, uri in disorder_uris.items():
         g.add((country, FUTURA.hasDisorder, uri))
-    
+
     if group == 0:
         group_label = FUTURA.EconomicDevelopment
     elif group == 1:
         group_label = FUTURA.HighIncome
     else:
         group_label = FUTURA.LowIncome
-    
+
     g.add((country, FUTURA.belongsToGroup, group_label))
 
-    # Add other columns as properties
+    # Aggiungi altre colonne come proprietà
     g.add((country, FUTURA.schizophreniaDisorders, Literal(row['Schizophrenia disorders'])))
     g.add((country, FUTURA.depressiveDisorders, Literal(row['Depressive disorders'])))
     g.add((country, FUTURA.anxietyDisorders, Literal(row['Anxiety disorders'])))
@@ -70,9 +70,10 @@ def create_rdf_triples(row):
     g.add((country, FUTURA.dalysAnxietyDisorders, Literal(row['DALYs Cause: Anxiety disorders'])))
     g.add((country, FUTURA.clusterKMeans, Literal(row['Cluster_KMeans'])))
 
-# Create RDF triples for all rows in the dataset
+
+# Crea RDF per tutte le righe del dataset
 df.apply(create_rdf_triples, axis=1)
 
-# Serialize the graph to an OWL file
-output_path = os.path.join(current_dir,'..', 'Risultati', 'IntegratedOntology.owl')
+# Serializza il grafo in un file OWL
+output_path = os.path.join(current_dir, '..', 'Risultati', 'IntegratedOntology.owl')
 g.serialize(destination=output_path, format='xml')
